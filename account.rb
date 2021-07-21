@@ -1,12 +1,31 @@
 # frozen_string_literal: true
 
-# Account representation class
+# Account class representation
 class Account
   DATABASE_FILENAME = 'accounts.db'
 
   class << self
+    def create_db
+      connection.execute <<-SQL
+      create table if not exists my_accounts (
+        name text,
+        url text,
+        login text,
+        password text
+      );
+      SQL
+    end
+
     def all
       connection.execute('SELECT rowid, * FROM my_accounts;')
+    end
+
+    def find_by_name(word)
+      connection.execute("SELECT rowid, * FROM my_accounts WHERE name LIKE '%#{word}%';")
+    end
+
+    def find_by_url(word)
+      connection.execute("SELECT rowid, * FROM my_accounts WHERE url LIKE '%#{word}%';")
     end
 
     def find(id)
