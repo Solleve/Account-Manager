@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Module InfoManager Representative
+# InfoManager module representation
 module InfoManager
   def cls
     system('cls') || system('clear')
